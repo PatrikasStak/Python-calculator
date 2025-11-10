@@ -11,11 +11,16 @@ def add_to_calculation(symbol):
 def evaluate_calculation(): #can be injected into??
     global calculation
     try:
-        calculation=str(eval(calculation))
-        text_result.delete(1.0, "end")
-        text_result.insert(1.0, calculation)
+        allowed_chars = "0123456789+-*/()."
+        if all(ch in allowed_chars for ch in calculation):
+            calculation=str(eval(calculation))
+            text_result.delete(1.0, "end")
+            text_result.insert(1.0, calculation)
+        else:
+            clear_field()
+            text_result.insert(1.0, "Error")
 
-    except:
+    except Exception:
         clear_field()
         text_result.insert(1.0, "Error")
         
